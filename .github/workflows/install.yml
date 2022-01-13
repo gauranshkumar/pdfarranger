@@ -37,6 +37,9 @@ jobs:
       options: --user root
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
     - run: ./setup.py build
     - run: HOME=/root wine python setup_win32.py bdist_msi
     - run: HOME=/root wine python setup_win32.py bdist_zip
@@ -48,13 +51,3 @@ jobs:
       with:
         name: pdfarranger-windows-portable-zip
         path: dist/*.zip
-  rpmbuild:
-    runs-on: ubuntu-latest
-    container: dreua/pdfarranger-docker-rpm
-    steps:
-    - name: RPM Build
-      run: /pdfarranger/pdfarranger-build
-    - uses: actions/upload-artifact@v2
-      with:
-        name: pdfarranger-fedora-testbuild
-        path: /github/home/rpmbuild/**/*.rpm
