@@ -1,7 +1,7 @@
 name: pdfarranger
 on:
   push:
-    branches: [ main ]
+    branches: [ win-build ]
   pull_request:
 jobs:
   build:
@@ -15,7 +15,6 @@ jobs:
         python-version: '3.8'
     - name: default python
       run: |
-         python --version
          python3 --version
     - name: Install
       run: pip3 install .[image]
@@ -38,17 +37,13 @@ jobs:
         python-version: '3.8'
     - name: default python
       run: |
-         python --version
          python3 --version
     - name: Install
       run: pip3 install .[image]
     - name: Tests and Coverage
       run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
   build-win32:
-    runs-on: ubuntu-latest
-    container:
-      image: jeromerobert/wine-mingw64:latest
-      options: --user root
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
@@ -58,9 +53,9 @@ jobs:
       run: |
          python --version
          python3 --version
-    - run: ./setup.py build
-    - run: HOME=/root wine python setup_win32.py bdist_msi
-    - run: HOME=/root wine python setup_win32.py bdist_zip
+    - run: python3 setup.py build
+    - run: python3 setup_win32.py bdist_msi
+    - run: python3 setup_win32.py bdist_zip
     - uses: actions/upload-artifact@v2
       with:
         name: pdfarranger-windows-installer-msi
