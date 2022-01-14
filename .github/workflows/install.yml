@@ -15,11 +15,10 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          install: mingw-w64-x86_64-cc mingw-w64-x86_64-python-3.8.6-3-any mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
-            mingw-w64-x86_64-python-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-gcc \
-            mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
-            mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pillow \
-            mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip git python-pip intltool 
+          install: mingw-w64-x86_64-cc mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject mingw-w64-x86_64-python-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-gcc mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pillow mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip git python-pip intltool
+      - run: /mingw64/bin/python3 --version
+      - run: wget http://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-python-3.8.6-6-any.pkg.tar.zst
+      - run: pacman -U mingw-w64-x86_64-python-3.8.6-6-any.pkg.tar.zst
       - run: /mingw64/bin/python3 --version
       - run: /mingw64/bin/python3.8 --version
       - run: pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+download/python-distutils-extra-2.39.tar.gz
