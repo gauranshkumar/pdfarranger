@@ -53,9 +53,9 @@ jobs:
       run: |
          python --version
          python3 --version
-    - run: python3 setup.py build
-    - run: python3 setup_win32.py bdist_msi
-    - run: python3 setup_win32.py bdist_zip
+    - run: python setup.py build
+    - run: python setup_win32.py bdist_msi
+    - run: python setup_win32.py bdist_zip
     - uses: actions/upload-artifact@v2
       with:
         name: pdfarranger-windows-installer-msi
