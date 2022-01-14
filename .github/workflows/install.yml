@@ -12,12 +12,9 @@ jobs:
       with:
         python-version: '3.8'
     - uses: msys2/setup-msys2@v2
-    - shell: msys2 {0}
-      run: |
-        pacman -Syu --noconfirm
-    - shell: msys2 {0}
-      run: |
-        pacman -Su --noconfirm
+#     defaults:
+#       run:
+#         shell: msys2 {0}
     - shell: msys2 {0}
       run: |
         pacman -S --noconfirm mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
