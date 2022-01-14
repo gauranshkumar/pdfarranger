@@ -16,7 +16,6 @@ jobs:
           msystem: MINGW64
           update: true
           install: mingw-w64-x86_64-cc 
-      - run: /mingw64/bin/python3 --version
       - run: wget http://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-python-3.8.6-6-any.pkg.tar.zst
       - run: pacman -U mingw-w64-x86_64-python-3.8.6-6-any.pkg.tar.zst --noconfirm
       - run: /mingw64/bin/python3 --version
