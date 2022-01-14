@@ -53,6 +53,7 @@ jobs:
       run: |
          python --version
          python3 --version
+    - run: pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+download/python-distutils-extra-2.39.tar.gz
     - run: python setup.py build
     - run: python setup_win32.py bdist_msi
     - run: python setup_win32.py bdist_zip
