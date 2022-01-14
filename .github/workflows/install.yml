@@ -20,9 +20,9 @@ jobs:
       - run: wget http://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-python-3.8.6-6-any.pkg.tar.zst
       - run: pacman -U mingw-w64-x86_64-python-3.8.6-6-any.pkg.tar.zst --noconfirm
       - run: /mingw64/bin/python3 --version
-      - run: pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+download/python-distutils-extra-2.39.tar.gz
+      - run: /mingw64/bin/python3 -m pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+download/python-distutils-extra-2.39.tar.gz
       - run: /mingw64/bin/python3 -m pip install --user keyboard img2pdf pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
-      - run: ./setup.py build
+      - run: ./setup.py build 
       - run: /mingw64/bin/python3 setup_win32.py bdist_msi
       - run: /mingw64/bin/python3 setup_win32.py bdist_zip
       - uses: actions/upload-artifact@v2
