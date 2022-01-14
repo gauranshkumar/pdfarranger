@@ -4,38 +4,6 @@ on:
     branches: [ win-build ]
   pull_request:
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    # PikePDF 4.2.0
-    container: jeromerobert/pdfarranger-docker-ci:1.4
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
-    - name: Install
-      run: pip3 install .[image]
-    - name: AppStream
-      run: appstreamcli validate /usr/share/metainfo/com.github.jeromerobert.pdfarranger.metainfo.xml
-    - name: Validate Desktop File
-      run: desktop-file-validate /usr/share/applications/com.github.jeromerobert.pdfarranger.desktop
-    - name: Tests and Coverage
-      run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
-    - name: Codecov
-      run: curl -s https://codecov.io/bash | bash
-  build-old-pikepdf:
-    runs-on: ubuntu-latest
-    # PikePDF 1.19
-    container: jeromerobert/pdfarranger-docker-ci:1.3.1
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
-    - name: Install
-      run: pip3 install .[image]
-    - name: Tests and Coverage
-      run: python3 -X tracemalloc -u -m unittest discover -v -f -s tests
   build-win32:
     runs-on: windows-latest
     steps:
@@ -46,20 +14,31 @@ jobs:
     - uses: msys2/setup-msys2@v2
     - shell: msys2 {0}
       run: |
-        pacman -Syu --noconfirm && pacman -Su --noconfirm
+        pacman -Syu --noconfirm
+    - shell: msys2 {0}
+      run: |
+        pacman -Su --noconfirm
     - shell: msys2 {0}
       run: |
         pacman -S --noconfirm mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
         mingw-w64-x86_64-python-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-gcc \
         mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
         mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pillow \
-        mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip git python-pip intltool && \
-        pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+download/python-distutils-extra-2.39.tar.gz && \
+        mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip git python-pip intltool 
+    - shell: msys2 {0}
+      run: |
+        pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+download/python-distutils-extra-2.39.tar.gz
+    - shell: msys2 {0}
+      run: |        
         /mingw64/bin/python3 -m pip install --user keyboard img2pdf pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
     - shell: msys2 {0}
       run: |
-        ./setup.py build && \
-        /mingw64/bin/python3 setup_win32.py bdist_msi && \
+        ./setup.py build
+    - shell: msys2 {0}
+      run: |
+        /mingw64/bin/python3 setup_win32.py bdist_msi
+    - shell: msys2 {0}
+      run: |
         /mingw64/bin/python3 setup_win32.py bdist_zip
     - uses: actions/upload-artifact@v2
       with:
