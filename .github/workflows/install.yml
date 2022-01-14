@@ -13,9 +13,6 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: '3.8'
-    - name: default python
-      run: |
-         python3 --version
     - name: Install
       run: pip3 install .[image]
     - name: AppStream
@@ -35,9 +32,6 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: '3.8'
-    - name: default python
-      run: |
-         python3 --version
     - name: Install
       run: pip3 install .[image]
     - name: Tests and Coverage
@@ -49,6 +43,19 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: '3.8'
+    - uses: msys2/setup-msys2@v2
+    - shell: msys2 {0}
+      run: |
+        pacman -Syu && pacman -Su
+    - shell: msys2 {0}
+      run: |
+        pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python-gobject \
+        mingw-w64-x86_64-python-cairo mingw-w64-x86_64-poppler mingw-w64-x86_64-gcc \
+        mingw-w64-x86_64-python-lxml mingw-w64-x86_64-qpdf mingw-w64-x86_64-pybind11 \
+        mingw-w64-x86_64-gettext mingw-w64-x86_64-gnutls mingw-w64-x86_64-python-pillow \
+        mingw-w64-x86_64-python-dateutil mingw-w64-x86_64-python-pip git python-pip intltool && \
+        pip install --user https://launchpad.net/python-distutils-extra/trunk/2.39/+download/python-distutils-extra-2.39.tar.gz && \
+        /mingw64/bin/python3 -m pip install --user keyboard img2pdf pikepdf https://github.com/jeromerobert/cx_Freeze/zipball/pdfarranger
     - name: default python
       run: |
          python --version
